@@ -1,13 +1,13 @@
 # Variables used by makefile (assume have code.c code.h and main.c exists)
 
 CC=g++
-CFLAGS=-Wall -std=c11
+CXXFLAGS=-Wall -std=c++17
 EXE=main
 
 # Recipes for targets
 
 main: $(OBJECTS)
-	$(CC) -o $(EXE) $(OBJECTS) $(EXE).cpp
+	$(CC) -o $(EXE) $(EXE).cpp
 
 # PHONY targets
 
