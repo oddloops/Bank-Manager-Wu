@@ -1,3 +1,6 @@
+#ifndef ACCOUNT_H
+#define ACCOUNT_H
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -40,3 +43,5 @@ public:
         }
     }
 };
+
+#endif
