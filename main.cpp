@@ -1,21 +1,20 @@
-#include <iostream>
-#include <string>
-#include "Account.h"
-using namespace std;
+#include "BankCsv.h"
 
 int main() {
-    string accountExist;
+    std::string accountExist;
+    BankCsv bank;
     do {
-        cout << "Existing member? (yes/no): ";
-        cin >> accountExist;
+        std::cout << "Existing member? (yes/no): ";
+        std::cin >> accountExist;
     } while (accountExist != "yes" &&  accountExist != "no");
 
     // Account exists
     if (accountExist == "yes") {
-        cout << "Welcome back" << endl;
+        std::cout << "Welcome back" << std::endl;
     } else {
         Account newAccount("New", 1234, 10);
         newAccount.getPin();
     }
+    std::cout << bank.fileExists("bank.csv") << std::endl;
     return 0;
 }

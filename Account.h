@@ -3,30 +3,29 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
 
 class Account {
 private:
-    string name;
+    std::string name;
     int pin;
     double amount;
 public:
-    Account (string username, int pinNumber, double initialAmount) {
+    Account (std::string username, int pinNumber, double initialAmount) {
         name = username;
         pin = pinNumber;
         amount = initialAmount;
     }
 
     void getName() {
-        cout << name << endl;
+        std::cout << name << std::endl;
     }
 
     void getPin() {
-        cout << pin << endl;
+        std::cout << pin << std::endl;
     }
 
     void getCurrentAmount() {
-        cout << amount << endl;
+        std::cout << amount << std::endl;
     }
 
     void deposit(double depositAmount) {
@@ -35,11 +34,11 @@ public:
 
     void withdraw(double withdrawAmount) {
         if (amount - withdrawAmount >= 0) {
-            cout << "Current: " << amount << endl;
+            std::cout << "Current: " << amount << std::endl;
             amount -= withdrawAmount;
-            cout << "After: " << amount << endl;
+            std::cout << "After: " << amount << std::endl;
         } else {
-            cout << "Cannot withdraw ammount!" << endl;
+            std::cout << "Cannot withdraw ammount!" << std::endl;
         }
     }
 };
