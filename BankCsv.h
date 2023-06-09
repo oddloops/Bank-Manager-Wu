@@ -7,16 +7,19 @@
 
 class BankCsv {
 private:
-    std::string filename = "bank.csv";
+    std::string bank = "bank.csv";
 
 public:
-    bool fileExists(std::string name) {
-        std::ifstream file(filename);
-        return file.is_open();
-    }
+    void addToBank(Account& client) {
+        // file pointer
+        std::fstream fout;
 
-    void addToBank(Account client) {
-    
+        // opens an existing csv file or creates a new file.
+        fout.open(bank, std::ios::out | std::ios::app);
+
+         // Insert the data to file
+        fout << "name,pin\n";
+        
     }
 };
 
