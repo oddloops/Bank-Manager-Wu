@@ -8,35 +8,37 @@ class Account {
 private:
     std::string name;
     int pin;
-    double amount;
+    double balance;
 public:
-    Account (std::string username, int pinNumber, double initialAmount) {
+    Account (std::string username, int pinNumber, double initialBalance) {
         name = username;
         pin = pinNumber;
-        amount = initialAmount;
+        balance = initialBalance;
     }
 
-    void getName() {
-        std::cout << name << std::endl;
+    std::string getName() {
+        return name;
     }
 
-    void getPin() {
-        std::cout << pin << std::endl;
+    int getPin() {
+        return pin;
     }
 
-    void getCurrentAmount() {
-        std::cout << amount << std::endl;
+    double getCurrentBalance() {
+        return balance;
     }
 
     void deposit(double depositAmount) {
-        amount += depositAmount;
+        std::cout << "Current: " << balance << std::endl;
+        balance += depositAmount;
+        std::cout << "After: " << balance << std::endl; 
     }
 
     void withdraw(double withdrawAmount) {
-        if (amount - withdrawAmount >= 0) {
-            std::cout << "Current: " << amount << std::endl;
-            amount -= withdrawAmount;
-            std::cout << "After: " << amount << std::endl;
+        if (balance - withdrawAmount >= 0) {
+            std::cout << "Current: " << balance << std::endl;
+            balance -= withdrawAmount;
+            std::cout << "After: " << balance << std::endl;
         } else {
             std::cout << "Cannot withdraw ammount!" << std::endl;
         }
