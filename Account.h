@@ -6,11 +6,10 @@
 
 class Account {
 private:
-    std::string name;
-    int pin;
+    std::string name, pin;
     double balance;
 public:
-    Account (std::string username, int pinNumber, double initialBalance) {
+    Account (std::string username, std::string pinNumber, double initialBalance) {
         name = username;
         pin = pinNumber;
         balance = initialBalance;
@@ -20,7 +19,7 @@ public:
         return name;
     }
 
-    int getPin() {
+    std::string getPin() {
         return pin;
     }
 
