@@ -3,7 +3,8 @@
 int main() {
     std::string accountExist;
     BankCsv bank;
-    Account test("test", 9876, 100);
+    std::string name, pin;
+    double initialBalance;
     do {
         std::cout << "Existing member? (yes/no): ";
         std::cin >> accountExist;
@@ -11,9 +12,32 @@ int main() {
 
     // Account exists
     if (accountExist == "yes") {
-        bank.accountOptions(test);
+        std::cout << "Enter username: ";
+        std::cin >> name;
+        std::cout << "Enter pin: ";
+        std::cin >> pin;
+        Account acc = bank.findAccount(name, pin);
+        if (acc.getName() != "") {
+            bank.accountOptions(acc);
+        }
+        else {
+            std::cout << "No such account" << std::endl;
+        }
     } else {
-        bank.addToBank(test);
+        std::cout << "Enter username: ";
+        std::cin >> name;
+        std::cout << "Enter pin: ";
+        std::cin >> pin;
+        std::cout << "Enter initial balance: ";
+        std::cin >> initialBalance;
+        Account accCheck = bank.findAccount(name, pin);
+        if ((name == accCheck.getName() && pin == accCheck.getPin()) || initialBalance < 0) {
+            std::cout << "Error making account" << std::endl;
+        }
+        else {
+            Account newAcc(name, pin, initialBalance);
+            bank.addToBank(newAcc);
+        }
     }
     return 0;
 }
