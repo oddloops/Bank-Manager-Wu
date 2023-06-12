@@ -21,15 +21,11 @@ public:
         fout.open(bank, std::ios::out | std::ios::app);
 
          // Insert the account data into the bank if it's not already in
-        if (!findAccount(client)) {
-            fout << client.getName() << "," << client.getPin() << "," << client.getCurrentBalance() << "\n";
-        } else {
-            std::cout << "Account already exist!" << std::endl;
-        }
+         fout << client.getName() << "," << client.getPin() << "," << client.getCurrentBalance() << "\n";
     }
 
     // checks if the accoutn is already in the bank
-    bool findAccount(Account& client) {
+    Account findAccount(std::string name, std::string pin) {
         std::fstream accounts;
         accounts.open(bank, std::ios::in);
         std::vector<std::string> acc;
@@ -40,11 +36,11 @@ public:
             while (std::getline(str, info, ',')) {
                 acc.push_back(info);
             }
-            if (acc[0] == client.getName() && stoi(acc[1]) == client.getPin()) {
-                return true;
+            if (acc[0] == name && acc[1] == pin) {
+                return Account(acc[0], acc[1], std::stod(acc[2]));
             }
         }
-        return false;
+        return Account("", "", -1.0);
     }
 
     void accountOptions(Account& client) {
@@ -58,6 +54,7 @@ public:
             std::cout << "Option: ";
             std::cin >> option;
         } while (option < 1 || option > 4);
+        std::cout << "\n";
         switch(option) {
         case 1:
             std::cout << "Amount to deposit: ";
@@ -67,7 +64,7 @@ public:
         case 2:
             std::cout << "Amount to withdraw: ";
             std::cin >> amount;
-            client.deposit(amount);
+            client.withdraw(amount);
             break;
         case 3:
             std::cout << "Name: " << client.getName() << std::endl;
@@ -75,8 +72,52 @@ public:
             std::cout << "Current Balance: " << client.getCurrentBalance() << std::endl;
             break;
         case 4:
+            exit(EXIT_SUCCESS);
             break;
         }
+        updateInformation(client);
+        std::cout << "\n";
+        accountOptions(client);
+    }
+
+    void updateInformation(Account& client) {
+        std::fstream fin, fout;
+        fin.open(bank, std::ios::in);
+        fout.open("bankUpdate.csv", std::ios::out);
+
+        std::string line, word;
+        std::vector<std::string> row;
+
+        int i;
+        while  (!fin.eof()) {
+            row.clear();
+            getline(fin, line);
+            std::stringstream str(line);
+
+            while (getline(str, word, ',')) {
+                row.push_back(word);
+            }
+
+            int rowSize = row.size();
+            if (row[0] == client.getName() && row[1] == client.getPin()) {
+                 fout << client.getName() << "," << client.getPin() << "," << client.getCurrentBalance() << "\n";
+            }
+            else {
+                if (!fin.eof()) {
+                    for (i = 0; i < rowSize - 1; i++) {
+                        fout << row[i] << ",";
+                    }
+                    fout << row[rowSize - 1] << "\n";
+                }
+            }
+            if (fin.eof()) {
+                break;
+            }
+        }
+        fin.close();
+        fout.close();
+        remove("bank.csv");
+        rename("bankUpdate.csv", "bank.csv");
     }
 };
 
